@@ -4,6 +4,8 @@
 
 This package provides a comprehensive toolkit for analyzing **non-linear tipping points** in financial network contagion using both deterministic simulations and **Bayesian Neural Network (BNN)** approaches. The analysis reveals how financial networks exhibit dual behavior: resilient to small shocks but catastrophically fragile beyond critical thresholds.
 
+![Img](./MCMC-BNN.png)
+
 ## 📊 Generated Outputs
 
 ### Visualizations
@@ -12,31 +14,37 @@ This package provides a comprehensive toolkit for analyzing **non-linear tipping
    - Compares tipping point behavior across 4 network structures
    - Shows how topology determines system fragility
    - **Key Insight**: Scale-free networks have sharp transitions; small-world networks are most resilient
+![Img](./network_tipping_points_comparison.png)
 
 2. **`connectivity_resilience_tradeoff.png`** (456 KB)
    - Demonstrates the **connectivity paradox**
    - Phase diagram showing resilient vs fragile zones
    - **Key Insight**: More connections ≠ always safer; optimal connectivity exists
+![Img](./connectivity_resilience_tradeoff.png)
 
 3. **`systemic_importance_analysis.png`** (1.1 MB)
    - Identifies "too-connected-to-fail" institutions
    - Correlates network centrality with contagion impact
    - **Key Insight**: Centrality metrics predict systemic importance (r ~0.7-0.8)
+![Img](./systemic_importance_analysis.png)
 
 4. **`contagion_dashboard.png`** (1.2 MB)
    - Comprehensive overview with 8 panels
    - Tipping point curve, sensitivity analysis, network structure
    - **Use Case**: Executive briefing on systemic risk
+   ![Img](./contagion_dashboard.png)
 
 5. **`bayesian_contagion_analysis.png`** (1.4 MB)
    - Bayesian inference results with uncertainty quantification
    - Posterior distributions for all parameters
    - **Key Insight**: Provides credible intervals, not just point estimates
+   ![Img](./bayesian_contagion_analysis.png)
 
 6. **`bayesian_decision_framework.png`** (437 KB)
    - Risk-based decision matrix using Bayesian posterior
    - Actionable recommendations based on uncertainty
    - **Use Case**: Real-time risk assessment for regulators
+   ![Img](./bayesian_decision_framework.png)
 
 ### Code
 
