@@ -16,8 +16,8 @@ The toolkit includes:
 - Simulation engine modeling 4 network topologies (Erdős-Rényi, Barabási-Albert, Watts-Strogatz, Core-Periphery)
 - Full contagion cascade dynamics with capital buffers and recovery rates
 - Bayesian inference for parameter uncertainty using MCMC
-- 6 production-ready visualizations including phase diagrams and systemic importance rankings
-- Complete documentation with applications to stress testing, capital planning, and regulatory compliance
+- 6 visualizations including phase diagrams and systemic importance rankings
+- Documentation with applications to stress testing, capital planning, and regulatory compliance
 
 Practical applications span central banking (stress testing, countercyclical buffers), commercial banking (portfolio risk), asset management (credit optimization), and regulatory policy (network-adjusted capital requirements).
 
