@@ -1,0 +1,253 @@
+# Financial Network Contagion Analysis - Configuration File
+# 
+# This file contains all configurable parameters for the analysis.
+# Modify these values to customize your simulation without changing code.
+
+# Network topology parameters
+network:
+  # Number of banks in the network
+  n_banks: 50
+  
+  # Network topology type
+  # Options: 'erdos_renyi', 'scale_free', 'small_world', 'core_periphery'
+  topology: 'scale_free'
+  
+  # Erdős-Rényi parameters (random graph)
+  erdos_renyi:
+    density: 0.1  # Connection probability
+  
+  # Barabási-Albert parameters (scale-free)
+  scale_free:
+    m: 3  # Number of edges to attach from new node
+  
+  # Watts-Strogatz parameters (small-world)
+  small_world:
+    k: 6   # Each node connected to k nearest neighbors
+    p: 0.1 # Rewiring probability
+  
+  # Core-Periphery parameters
+  core_periphery:
+    core_fraction: 0.2  # Fraction of nodes in core
+    core_density: 0.8   # Connection probability within core
+    periphery_connections: 3  # Avg connections from periphery to core
+
+# Bank balance sheet parameters
+balance_sheet:
+  # Capital ratio distribution
+  capital_ratio_mean: 0.08  # Mean capital ratio (Basel III minimum ~0.08)
+  capital_ratio_std: 0.02   # Standard deviation
+  
+  # Asset composition
+  interbank_fraction: 0.20  # Fraction of assets in interbank loans
+  
+  # Capital bounds (regulatory limits)
+  capital_min: 0.03  # Minimum capital ratio (distressed)
+  capital_max: 0.15  # Maximum capital ratio (well-capitalized)
+
+# Contagion simulation parameters
+contagion:
+  # Shock analysis
+  shock_min: 0.0     # Minimum shock size to test
+  shock_max: 0.5     # Maximum shock size to test
+  n_shock_points: 50 # Number of shock levels to test
+  
+  # Monte Carlo simulation
+  n_simulations: 100 # Number of simulations per shock level
+  
+  # Recovery parameters
+  recovery_rate: 0.40  # Recovery rate on defaulted interbank loans (0-1)
+  
+  # Cascade parameters
+  max_cascade_steps: 100  # Maximum cascade iterations
+
+# Bayesian inference parameters
+bayesian:
+  # MCMC sampling
+  n_samples: 2000  # Number of posterior samples
+  n_tune: 1000     # Number of tuning steps
+  n_chains: 4      # Number of parallel chains
+  
+  # Priors
+  priors:
+    capital_mean:
+      type: 'Normal'
+      mu: 0.08
+      sigma: 0.02
+    
+    recovery_rate:
+      type: 'Beta'
+      alpha: 4
+      beta: 6  # Centers at 0.4
+    
+    network_density:
+      type: 'Beta'
+      alpha: 2
+      beta: 8  # Centers at 0.2
+  
+  # Convergence diagnostics
+  target_accept: 0.95  # Target acceptance rate for NUTS
+  max_treedepth: 10    # Maximum tree depth for NUTS
+  
+  # Random seed for reproducibility
+  random_seed: 42
+
+# Analysis parameters
+analysis:
+  # Tipping point detection
+  tipping_point_method: 'max_derivative'  # Options: 'max_derivative', 'inflection_point'
+  
+  # Systemic importance metrics
+  centrality_measures:
+    - 'degree'
+    - 'betweenness'
+    - 'eigenvector'
+    - 'closeness'
+  
+  # Network comparison
+  compare_topologies: true
+  topologies_to_compare:
+    - 'erdos_renyi'
+    - 'scale_free'
+    - 'small_world'
+    - 'core_periphery'
+  
+  # Connectivity analysis
+  density_range: [0.05, 0.4]  # Range of densities to test
+  n_density_points: 10         # Number of density levels
+
+# Visualization parameters
+visualization:
+  # Figure settings
+  style: 'seaborn-v0_8-darkgrid'
+  figure_dpi: 300
+  figure_format: 'png'  # Options: 'png', 'pdf', 'svg'
+  
+  # Color schemes
+  colormap: 'RdYlGn_r'  # Colormap for heatmaps
+  
+  # Font sizes
+  title_fontsize: 13
+  label_fontsize: 12
+  legend_fontsize: 10
+  
+  # Network visualization
+  network_layout: 'spring'  # Options: 'spring', 'kamada_kawai', 'circular'
+  node_size: 300
+  edge_alpha: 0.2
+  
+  # Save settings
+  save_figures: true
+  bbox_inches: 'tight'
+
+# Output directories
+output:
+  # Base directory for outputs
+  base_dir: 'results'
+  
+  # Subdirectories
+  figures_dir: 'results/figures'
+  tables_dir: 'results/tables'
+  models_dir: 'results/models'
+  data_dir: 'results/data'
+  
+  # File naming
+  timestamp: true  # Add timestamp to output files
+  prefix: 'contagion_analysis'
+
+# Logging configuration
+logging:
+  level: 'INFO'  # Options: 'DEBUG', 'INFO', 'WARNING', 'ERROR'
+  log_file: 'logs/contagion_analysis.log'
+  console_output: true
+
+# Performance optimization
+performance:
+  # Parallel processing
+  use_parallel: false  # Use joblib for parallel simulations
+  n_jobs: -1          # Number of parallel jobs (-1 = all cores)
+  
+  # Memory management
+  batch_size: 10      # Batch size for large simulations
+  
+  # Caching
+  cache_results: true  # Cache intermediate results
+  cache_dir: 'cache'
+
+# Advanced options
+advanced:
+  # Custom initial conditions
+  custom_shocks:
+    enabled: false
+    shock_banks: []  # List of bank IDs to shock
+    shock_sizes: []  # Corresponding shock sizes
+  
+  # Time-varying parameters
+  dynamic_parameters:
+    enabled: false
+    capital_evolution: 'constant'  # Options: 'constant', 'mean_reverting'
+    
+  # Stress scenarios
+  stress_scenarios:
+    enabled: false
+    scenarios:
+      - name: 'baseline'
+        shock_size: 0.1
+        recovery_rate: 0.4
+      
+      - name: 'severe'
+        shock_size: 0.3
+        recovery_rate: 0.2
+      
+      - name: 'extreme'
+        shock_size: 0.5
+        recovery_rate: 0.1
+
+# Validation parameters
+validation:
+  # Historical calibration
+  use_historical_data: false
+  historical_data_file: 'data/raw/historical_defaults.csv'
+  
+  # Cross-validation
+  cross_validation: false
+  n_folds: 5
+  
+  # Sensitivity analysis
+  sensitivity_analysis: true
+  parameters_to_vary:
+    - 'capital_ratio_mean'
+    - 'recovery_rate'
+    - 'interbank_fraction'
+
+# Reporting
+reporting:
+  # Generate reports
+  generate_report: true
+  report_format: 'html'  # Options: 'html', 'pdf', 'markdown'
+  
+  # Report sections
+  include_sections:
+    executive_summary: true
+    methodology: true
+    key_findings: true
+    visualizations: true
+    technical_details: true
+    recommendations: true
+  
+  # Export options
+  export_to_excel: false
+  export_to_powerpoint: false
+
+# Experimental features (use with caution)
+experimental:
+  # Machine learning integration
+  use_ml_prediction: false
+  ml_model: 'random_forest'
+  
+  # Real-time monitoring
+  real_time_mode: false
+  update_interval: 60  # seconds
+  
+  # API integration
+  api_enabled: false
+  api_port: 5000
